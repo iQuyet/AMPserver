@@ -18,6 +18,7 @@ adddate() {
         echo "$(date) $line"
     done
 }
+. "$base_path/lib/OSTYPE"
 if [ "$OSTYPE" == "linux-gnu" ]; then		# Don't use "[[...]]", in FreeBSD using "if [...]; then"
 	# ...
 	echo " OSTYPE: Linux."

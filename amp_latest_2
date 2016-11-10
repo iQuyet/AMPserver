@@ -47,7 +47,6 @@ if [ $platform == 'linux' ]; then		# Don't use "[[...]]", in FreeBSD using "if [
 elif [ $platform == 'freebsd' ]; then
 	echo " platform: FreeBSD."
 	. "$base_path/os/amp_freebsd_latest" | adddate >>$base_path/install.log
-
 elif [ "$platform" == "darwin"* ]; then
 	# Mac OSX
 	echo " platform: darwin."
@@ -61,11 +60,6 @@ elif [ "$platform" == "msys" ]; then
 	# Lightweight shell and GNU utilities compiled for Windows (part of MinGW)
 	echo " platform: msys."
 	echo " OS: Lightweight shell and GNU utilities compiled for Windows (part of MinGW)."
-	echo " This platform does't Support by this Script. Exit."
-elif [ "$platform" == "win32" ]; then
-	# I'm not sure this can happen.
-	echo " platform: win32."
-	echo " OS: Windows."
 	echo " This platform does't Support by this Script. Exit."
 elif [ "$platform" == "freebsd"* ]; then
 	# ...

@@ -3,7 +3,7 @@
 # Website: quyet.tk
 # Created: 03:15PM November 08, 2016 (VN time)
 #
-# Detect the OS TYPE from a Shell script
+# Detect the UNIX/LINUX from a Shell script (Support: UNIX/LINUX ; don't Support: WINDOWS, ...)
 platform='unknown'
 unamestr=`uname`
 if [ "$unamestr" == 'Linux' ]; then

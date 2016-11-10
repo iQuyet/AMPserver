@@ -3,4 +3,4 @@
 # Website: quyet.tk
 # Created: 03:15PM November 08, 2016 (VN time)
 #
-# Detect the LINUX DISTRO from a Shell script (Support: LINUX ; don't Support: UNIX, WINDOWS, ...)
+# Detect the ALL OS from a Shell script (Support All: UNIX, LINUX, WINDOWS, ...)
