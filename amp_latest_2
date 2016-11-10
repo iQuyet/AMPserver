@@ -18,11 +18,11 @@ adddate() {
         echo "$(date) $line"
     done
 }
-if [ "$OSTYPE" == "linux-gnu" ]; then		# Don't use "[[...]]", in FreeBSD using "if [...]; then"
-	# ...
-	echo " OSTYPE: Linux."
-	# Detect the Linux OS from a Shell script
-	echo ""------ Detect the Linux OS. "------"
+. "$base_path/lib/platform"
+if [ $platform == 'linux' ]; then		# Don't use "[[...]]", in FreeBSD using "if [...]; then"
+	echo " platform: Linux."
+	# Detect the LINUX DISTRO from a Shell script
+	echo ""------ Detect the LINUX DISTRO. "------"
 	if [ -f /etc/centos-release ] ; then
 		. "$base_path/os/amp_centos_latest" | adddate >>$base_path/install.log
 	elif [ -f /etc/redhat-release ] ; then
@@ -44,31 +44,35 @@ if [ "$OSTYPE" == "linux-gnu" ]; then		# Don't use "[[...]]", in FreeBSD using "
 		echo " Unknown OS."
 		echo " This OS does't Support by this Script. Exit."
 	fi
-elif [ "$OSTYPE" == "darwin"* ]; then
+elif [ $platform == 'freebsd' ]; then
+	echo " platform: FreeBSD."
+	. "$base_path/os/amp_freebsd_latest" | adddate >>$base_path/install.log
+
+elif [ "$platform" == "darwin"* ]; then
 	# Mac OSX
-	echo " OSTYPE: darwin."
+	echo " platform: darwin."
 	. "$base_path/os/amp_osx_latest" | adddate >>$base_path/install.log
-elif [ "$OSTYPE" == "cygwin" ]; then
+elif [ "$platform" == "cygwin" ]; then
 	# POSIX compatibility layer and Linux environment emulation for Windows
-	echo " OSTYPE: cygwin."
+	echo " platform: cygwin."
 	echo " OS: POSIX compatibility layer and Linux environment emulation for Windows."
-	echo " This OSTYPE does't Support by this Script. Exit."
-elif [ "$OSTYPE" == "msys" ]; then
+	echo " This platform does't Support by this Script. Exit."
+elif [ "$platform" == "msys" ]; then
 	# Lightweight shell and GNU utilities compiled for Windows (part of MinGW)
-	echo " OSTYPE: msys."
+	echo " platform: msys."
 	echo " OS: Lightweight shell and GNU utilities compiled for Windows (part of MinGW)."
-	echo " This OSTYPE does't Support by this Script. Exit."
-elif [ "$OSTYPE" == "win32" ]; then
+	echo " This platform does't Support by this Script. Exit."
+elif [ "$platform" == "win32" ]; then
 	# I'm not sure this can happen.
-	echo " OSTYPE: win32."
+	echo " platform: win32."
 	echo " OS: Windows."
-	echo " This OSTYPE does't Support by this Script. Exit."
-elif [ "$OSTYPE" == "freebsd"* ]; then
+	echo " This platform does't Support by this Script. Exit."
+elif [ "$platform" == "freebsd"* ]; then
 	# ...
-	echo " OSTYPE: FreeBSD."
+	echo " platform: FreeBSD."
 	. "$base_path/os/amp_freebsd_latest" | adddate >>$base_path/install.log
 else
 	# Unknown.
-	echo " Unknown OSTYPE. Exit."
-	echo " This OSTYPE does't Support by this Script. Exit."
+	echo " Unknown platform. Exit."
+	echo " This platform does't Support by this Script. Exit."
 fi

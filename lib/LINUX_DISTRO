@@ -3,5 +3,4 @@
 # Website: quyet.tk
 # Created: 03:15PM November 08, 2016 (VN time)
 #
-# Latest
-. "$base_path/amp_centos_7"
+# Detect the Linux OS from a Shell script

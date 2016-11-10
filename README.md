@@ -8,15 +8,15 @@ b. Curent OS support: CentOS 7, FreeBSD 11 .
 ### Install base
 First: Install curl gzip 
 ### Download source
-mkdir -p /home && cd /home && curl -o AMPserver-1.0.0.tar.gz -L https://github.com/iQuyet/AMPserver/archive/1.0.0.tar.gz
+mkdir -p /home && cd /home && curl -o AMPserver-1.0.1.tar.gz -L https://github.com/iQuyet/AMPserver/archive/1.0.1.tar.gz
 ### Extract
-tar -xzvf AMPserver-1.0.0.tar.gz
+tar -xzvf AMPserver-1.0.1.tar.gz
 ### Run script
-sh AMPserver-1.0.0/amp_latest
+sh AMPserver-1.0.1/amp_latest
 ### Done
 #
 ### or Run with a commandline
-mkdir -p /home && cd /home && curl -o AMPserver-1.0.0.tar.gz -L https://github.com/iQuyet/AMPserver/archive/1.0.0.tar.gz && tar -xzvf AMPserver-1.0.0.tar.gz && sh AMPserver-1.0.0/amp_latest
+mkdir -p /home && cd /home && curl -o AMPserver-1.0.1.tar.gz -L https://github.com/iQuyet/AMPserver/archive/1.0.1.tar.gz && tar -xzvf AMPserver-1.0.1.tar.gz && sh AMPserver-1.0.1/amp_latest
 #
 ## b. Install Script Master
 ### Run with a commandline
@@ -26,6 +26,11 @@ mkdir -p /home && cd /home && curl -o AMPserver-master.tar.gz -L https://github.
 login MariaDB with username: root and password: 456sql
 #
 # 4. Log
+## 1.0.1
+added amp_latest_2
+#
+added folder "lib", "os"
+#
 ## 1.0.0
 OS Support: CentOS 7 (Apache, MariaDB, PHP); FreeBSD 11 (Apache, MariaDB, PHP);
 #

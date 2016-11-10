@@ -4,4 +4,4 @@
 # Created: 03:15PM November 08, 2016 (VN time)
 #
 # Latest
-. "$base_path/amp_debian_8"
+. "$base_path/os/amp_osx_10"
