@@ -1,0 +1,12 @@
+#!/bin/sh
+# Author: Quyet Ng.
+# Website: quyet.tk
+# Created: 03:15PM November 08, 2016 (VN time)
+#
+# OS
+echo " OS: Debian 8."
+echo " This OS does't Support by this Script. Exit."
+# Install
+#echo "------ Install Apache ------"
+#echo "------ Install MariaDB ------"
+#echo "------ Install PHP ------"

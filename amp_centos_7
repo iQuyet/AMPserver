@@ -1,0 +1,74 @@
+#!/bin/sh
+# Author: Quyet Ng.
+# Website: quyet.tk
+# Created: 03:15PM November 08, 2016 (VN time)
+#
+# OS
+echo " OS: CentOS 7."
+# Install
+echo "------ Update, Install Base ------"
+yum -y update
+yum -y install epel-release
+yum -y install sed
+yum -y install ed
+echo "------ Install Apache, OpenSSL ------"
+yum -y install httpd openssl mod_ssl
+systemctl enable httpd.service
+systemctl start httpd.service
+echo "------ Configuaration Apache ------"
+for f in '/etc/httpd/conf.d/welcome.conf'
+do
+  if [ -f $f -a -r $f ]; then
+  rm -f /etc/httpd/conf.d/welcome.conf
+  else
+    echo "Error: Cannot read $f"
+  fi
+done
+HTTPDCONF="/etc/httpd/conf/httpd.conf"
+for f in $HTTPDCONF
+do
+  if [ -f $f -a -r $f ]; then
+    cp $HTTPDCONF $HTTPDCONF.bak
+    sed -i '/ServerAdmin root@/c\ServerAdmin root@localhost' $HTTPDCONF		# Replace whole line containing a string using Sed
+    sed -i '/ServerName www./c\ServerName www.localhost:80' $HTTPDCONF
+    sed -i '/AllowOverride None/c\    AllowOverride All' $HTTPDCONF
+    sed -i '/DirectoryIndex index.html/c\    DirectoryIndex index.html index.cgi index.php' $HTTPDCONF
+    ed -s $HTTPDCONF <<< $'g%ServerTokens Prod%d\nw' && echo -e 'ServerTokens Prod' >> $HTTPDCONF	# Delete line "ServerTokens Prod" && Add line "ServerTokens Prod" to end of the file
+    ed -s $HTTPDCONF <<< $'g%KeepAlive On%d\nw' && echo -e 'KeepAlive On' >> $HTTPDCONF
+  else
+    echo "Error: Cannot read $f"
+  fi
+done
+systemctl restart httpd.service
+echo "------ Install MariaDB ------"
+yum -y install mariadb-server mariadb-libs
+systemctl enable mariadb.service
+systemctl start mariadb.service
+echo "------ Configuaration MariaDB ------"
+#mysqladmin -u root password 456sql
+#mysql_secure_installation <<EOF\n456sql\nn\ny\ny\ny\ny\nEOF
+#mysqladmin -u root -p'456sql' password 'new_pw'
+mysql -e "UPDATE mysql.user SET Password=PASSWORD('456sql') WHERE User='root';"
+mysql -e "DELETE FROM mysql.user WHERE User='';"
+mysql -e "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');"
+mysql -e "DROP DATABASE IF EXISTS test;"
+mysql -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';"
+mysql -e "FLUSH PRIVILEGES;"
+mysql -e "set password for root@'127.0.0.1'=password('mysql456');"
+mysql -e "set password for root@'::1'=password('mysql456');"
+systemctl restart mariadb.service
+echo "------ Install PHP, Module PHP ------"
+yum -y install php php-mysql php-pdo php-gd php-mbstring
+echo "------ Configuaration PHP ------"
+PHPINI="/etc/php.ini"
+for f in $PHPINI
+do
+  if [ -f $f -a -r $f ]; then
+    cp $PHPINI $PHPINI.bak
+    sed -i '/memory_limit = /c\memory_limit = 256M' $PHPINI		# Replace whole line containing a string using Sed
+    sed -i '/post_max_size = /c\post_max_size = 4096M' $PHPINI
+    sed -i '/upload_max_filesize = /c\upload_max_filesize = 4096M' $PHPINI
+  else
+    echo "Error: Cannot read $f"
+  fi
+done

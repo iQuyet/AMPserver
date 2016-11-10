@@ -1,0 +1,74 @@
+#!/bin/sh
+##############################################################
+# This script help you to install and configure a Server with:
+# 	- Apache
+# 	- MariaDB
+# 	- PHP
+# Author: Quyet Ng.
+# Website: quyet.tk
+# Created: 03:15PM November 08, 2016 (VN time)
+##############################################################
+#
+# Detect the OS TYPE from a Bash script
+echo "------ Detect the OS TYPE ------"
+readonly base_file=`readlink -f "$0"`
+readonly base_path=`dirname $base_file`
+adddate() {
+    while IFS= read -r line; do
+        echo "$(date) $line"
+    done
+}
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+	# ...
+	echo " OSTYPE: Linux."
+	# Detect the Linux OS from a Bash script
+	echo ""------ Detect the Linux OS. "------"
+	if [ -f /etc/centos-release ] ; then
+		. "$base_path/amp_centos_latest" | adddate >>$base_path/install.log
+	elif [ -f /etc/redhat-release ] ; then
+		echo " OS: RedHat."
+		echo " This OS does't Support by this Script. Exit."
+	elif [ -f /etc/ubuntu_version ] ; then
+		echo " OS: Ubuntu."
+		echo " This OS does't Support by this Script. Exit."
+	elif [ -f /etc/debian_version ] ; then
+		. "$base_path/amp_debian_latest" | adddate >>$base_path/install.log
+	elif [ -f /etc/SuSE-release ] ; then
+		echo " OS: SuSe."
+		echo " This OS does't Support by this Script. Exit."
+	elif [ -f /etc/mandrake-release ] ; then
+		echo " OS: Mandrake."
+		echo " This OS does't Support by this Script. Exit."
+	else
+		# Unknown.
+		echo " Unknown OS."
+		echo " This OS does't Support by this Script. Exit."
+	fi
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+	# Mac OSX
+	echo " OSTYPE: darwin."
+	. "$base_path/amp_osx_latest" | adddate >>$base_path/install.log
+elif [[ "$OSTYPE" == "cygwin" ]]; then
+	# POSIX compatibility layer and Linux environment emulation for Windows
+	echo " OSTYPE: cygwin."
+	echo " OS: POSIX compatibility layer and Linux environment emulation for Windows."
+	echo " This OSTYPE does't Support by this Script. Exit."
+elif [[ "$OSTYPE" == "msys" ]]; then
+	# Lightweight shell and GNU utilities compiled for Windows (part of MinGW)
+	echo " OSTYPE: msys."
+	echo " OS: Lightweight shell and GNU utilities compiled for Windows (part of MinGW)."
+	echo " This OSTYPE does't Support by this Script. Exit."
+elif [[ "$OSTYPE" == "win32" ]]; then
+	# I'm not sure this can happen.
+	echo " OSTYPE: win32."
+	echo " OS: Windows."
+	echo " This OSTYPE does't Support by this Script. Exit."
+elif [[ "$OSTYPE" == "freebsd"* ]]; then
+	# ...
+	echo " OSTYPE: FreeBSD."
+	. "$base_path/amp_freebsd_latest" | adddate >>$base_path/install.log
+else
+	# Unknown.
+	echo " Unknown OSTYPE. Exit."
+	echo " This OSTYPE does't Support by this Script. Exit."
+fi

@@ -1,0 +1,20 @@
+#!/bin/sh
+# Author: Quyet Ng.
+# Website: quyet.tk
+# Created: 03:15PM November 08, 2016 (VN time)
+#
+# OS
+echo " OS: FreeBSD 11."
+# Install
+echo "------ Update, Install base ------"
+portsnap fetch extract
+cd /usr/ports/ports-mgmt/pkg && make reinstall clean
+cd /usr/ports/textproc/gsed/ && make install clean
+echo "------ Install Apache, OpenSSL ------"
+cd /usr/ports/www/apache24/ && make install clean
+cd /usr/ports/security/openssl/ && make install clean		# In FreeBSD, mod_ssl module is enabled by default in both the package and the port.
+echo "------ Install MariaDB ------"
+cd /usr/ports/databases/mariadb101-server/ && make install clean
+echo "------ Install PHP, Modules ------"
+cd /usr/ports/lang/php70/ && make install clean
+cd /usr/ports/lang/php70-extensions/ && make install clean
